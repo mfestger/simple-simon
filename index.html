@@ -1,0 +1,152 @@
+<html>
+<head>
+    <title>Simple Simon</title>
+    <link href="https://fonts.googleapis.com/css?family=Revalia" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet"  href="simon.css">
+    <link href="https://fonts.googleapis.com/css?family=Sarpanch" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+<h1 id="simon-title">Simple Simon</h1>
+
+<div id="simon-game-container">
+    <div id="top-left" class="slice"></div>
+    <div id="top-right" class="slice"></div>
+    <div id="try-again">
+        <div id="error-message1">E R R O R</div>
+        <div id="error-message2">Reprocessing...</div>
+    </div>
+    <div id="bottom-left" class="slice"></div>
+    <div id="bottom-right" class="slice"></div>
+</div>
+
+<div id="level-container">Level: <span id="level"></span></div>
+
+<div id="bttn">
+    <button id="start-reset">Start</button>
+</div>
+<div id="highScoreBox">
+
+</div>
+<script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous">
+</script>
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+<script>
+    "use strict";
+    $(document).ready(function() {
+//        $("#level").hide();
+//        $("#lives").hide();
+//        $(".slices").hide();
+//        $("#simon-game-container").hide();
+//        $("#start-reset").hide();
+//        $("#level-container").hide();
+//        $("#simon-title").hide();
+        $('#try-again').hide();                                  // hides the "error" message upon being incorrect
+
+
+        var attempt = [], simon = [], level = 1, index = 0, flag = true, color = "", playerTurn = false,
+            soundIndex;
+        var slices = ["top-left", "top-right", "bottom-left", "bottom-right"];
+        var topleft = new Audio("audio/top-left.mp3");
+        var topright = new Audio("audio/top-right.mp3");
+        var bottomleft = new Audio("audio/bottom-left.mp3");
+        var bottomright = new Audio("audio/bottom-right.mp3");
+        var highestScore = 0;
+        var sounds = [topleft, topright, bottomleft, bottomright];
+
+        $("#level").html(level);																		// set level count to 1
+
+        $(".slice").on("click", function () {
+            if (playerTurn) {																					// only add to attempt array if it's player's turn
+                color = $(this).attr("id");
+                attempt.push(color);																		// push guess into attempt array
+
+                $(this).fadeOut(150).fadeIn(150);
+                soundIndex = slices.indexOf(color);
+                sounds[soundIndex].play();
+
+                if (attempt[index] !== simon[index]) {									// if guess is incorrect
+                    $('#try-again').fadeIn(100);
+                    $('#try-again').delay(900).fadeOut(100);
+                    patternBlink(simon);
+                    index = 0;
+                    attempt = [];
+                    //flag = true;
+                }
+                else {
+                    if (index === simon.length - 1) {									// if entire guess is correct
+                        playerTurn = false;																		// turn control to code for new pattern, user can't click
+                        attempt = [];																					// reset attempt array
+                        level++;																							// level up
+                        $("#level").html(level);
+                        index = 0;																						// reset index
+                        color = slices[Math.floor(Math.random() * 4)];	// add upon pattern
+                        simon.push(color);
+                        patternBlink(simon);
+                    }
+                    else if (index !== simon.length - 1) {						// if current guess is correct, but not the end of pattern
+                        index++; // increase index
+                        highestScoreDisplay();
+                        return;
+                    }
+                }
+            }
+        });
+
+        $("#start-reset").on("click", function () {									// when start button is clicked
+            if ($(this).html() === "Start") {
+                simon = [];																							// ensure simon array is empty
+                $(this).html("Reset");																	// change text in start button to reset
+
+                color = slices[Math.floor(Math.random() * 4)];		// add first color
+                simon.push(color);
+
+                patternBlink(simon);																		// call patterBlink() to make first pattern blink
+            }
+            else {																										// reset game
+                reset();
+            }
+        });																													// end of start button click
+
+        function patternBlink(simon) {
+            setTimeout(function () {																		// delay next pattern blink from last button guess
+                for (var i = 0; i < simon.length; i++) {									// make each blink sequentially
+                    (function (i) {
+                        setTimeout(function () {
+                            soundIndex = slices.indexOf(simon[i]);
+                            sounds[soundIndex].play();
+                            $("#" + simon[i]).fadeOut(150).fadeIn(150);					// make selected slice blink
+                        }, i * 800);
+                    })(i);																								// make it user's turn to play
+                }
+            }, 1000);
+            playerTurn = true;
+        }
+
+        function reset() {
+            $("#start-reset").html("Start");
+            level = 1;
+            $("#level").html(level);
+            attempt = [];
+            simon = [];
+            index = 0;
+            var audio = new Audio('audio/reset.mp3');
+            audio.play();
+        }
+    });
+
+    function highScoreDisplay(){
+
+            $('#highScoreBox').html("HIGH SCORE: " + highestScore)
+
+
+    }
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,104 @@
+body {
+    font-family: 'Sarpanch', sans-serif;
+    text-align: center;
+    background-image: url("http://i.imgur.com/4XRnTBT.jpg");
+    color: green;
+    font-size: 20px;
+}
+h1 {
+    font-size: 50px;
+}
+#simon-game-container {
+    width: 450px;
+    height: 450px;
+    margin: 0 auto;
+    background-color: black;
+    border: solid cadetblue 4px;
+    border-radius: 25px;
+    /*overflow: hidden;*/
+}
+.slice {
+    width: 194px;
+    height: 194px;
+    float: left;
+    cursor: pointer;
+}
+#top-left {
+    background-color: #317022;
+    background-image: url("http://i.imgur.com/rug17uf.jpg");
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    margin-top: 30px;
+    margin-left: 30px;
+    border-top: solid cadetblue 3px;
+    border-left: solid cadetblue 3px;
+}
+#top-right {
+    background-color: #667012;
+    background-image: url("http://i.imgur.com/p1FXINo.jpg");
+    background-size: 200px 200px;
+    margin-top: 30px;
+    border-top: solid cadetblue 3px;
+    border-right: solid cadetblue 3px;
+
+}
+#bottom-left {
+    background-color: #123b4e;
+    background-image: url("http://i.imgur.com/JirlfPw.jpg");
+    background-size: 200px 200px;
+    margin-left: 30px;
+    border-bottom: solid cadetblue 3px;
+    border-left: solid cadetblue 3px;
+}
+#bottom-right {
+    background-color: #5b9608;
+    background-image: url("http://i.imgur.com/G6m3T4f.jpg");
+    background-size: 200px 200px;
+    border-bottom: solid cadetblue 3px;
+    border-right: solid cadetblue 3px;
+
+}
+#level-container {
+    display: inline-block;
+    margin: 10px;
+    font-size: 20px;
+}
+#bttn {
+    text-align: center;
+    margin: 0 auto;
+}
+button {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+#try-again {
+    width: 400px;
+    height: 50px;
+    background-color: black;
+    opacity: .7;
+    border-radius: 20px;
+    float: left;
+    position: absolute;
+    margin-top: 130px;
+    margin-left: 24px;
+    display: table;
+    vertical-align: middle;
+
+}
+
+#error-message1 {
+    font-size: 40px;
+    color: #5fe717;
+    font-family: 'Sarpanch', sans-serif;
+}
+#error-message2 {
+    font-size: 20px;
+    color: #5fe717;
+    font-family: 'Sarpanch', sans-serif;
+}
+
+#highScoreBox{
+    text-align: center;
+    margin: 0 auto;
+}
